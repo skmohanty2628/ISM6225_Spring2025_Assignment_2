@@ -1,10 +1,14 @@
 # ISM6225 Spring 2025 – Assignment 2: Computational Problem Solving
 
 👨‍💻 Student Information Name: Subham Mohanty
+
 USF NetID: U48397623
+
 Course: ISM6225 - Application Development for Analytics
 Semester: Spring 2025
-Instructor: Clinton Daniel TA : Harsha Sai Jagu
+Instructor: Clinton Daniel 
+
+TA : Harsha Sai Jagu
 
 
 This repository contains solutions to **Assignment 2** for the course 
