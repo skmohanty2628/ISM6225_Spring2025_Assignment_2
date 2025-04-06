@@ -8,51 +8,51 @@ namespace Assignment_2
         static void Main(string[] args)
         {
             // Question 1: Find Missing Numbers in Array
-            Console.WriteLine("Question 1:");
-            int[] nums1 = { 4, 3, 2, 7, 8, 2, 3, 1 };
+            Console.WriteLine("Question 1: Missing Numbers in Array");
+            int[] nums1 = { 4, 3, 2, 7, 8, 2, 3, 1,1,4 };
             IList<int> missingNumbers = FindMissingNumbers(nums1);
             Console.WriteLine(string.Join(",", missingNumbers));
 
             // Question 2: Sort Array by Parity
-            Console.WriteLine("Question 2:");
-            int[] nums2 = { 3, 1, 2, 4 };
+            Console.WriteLine("Question 2:Sort Array by Parity");
+            int[] nums2 = { 4,3,2,1};
             int[] sortedArray = SortArrayByParity(nums2);
             Console.WriteLine(string.Join(",", sortedArray));
 
             // Question 3: Two Sum
-            Console.WriteLine("Question 3:");
-            int[] nums3 = { 2, 7, 11, 15 };
-            int target = 9;
+            Console.WriteLine("Question 3:Two Sum");
+            int[] nums3 = { 2, 7,11, 15, 4};
+            int target = 6;
             int[] indices = TwoSum(nums3, target);
             Console.WriteLine(string.Join(",", indices));
 
             // Question 4: Find Maximum Product of Three Numbers
-            Console.WriteLine("Question 4:");
-            int[] nums4 = { 1, 2, 3, 4 };
+            Console.WriteLine("Question 4: Maximum Product of Three Numbers");
+            int[] nums4 = { 9,1, 2, 3, 4 ,8};
             int maxProduct = MaximumProduct(nums4);
             Console.WriteLine(maxProduct);
 
             // Question 5: Decimal to Binary Conversion
-            Console.WriteLine("Question 5:");
-            int decimalNumber = 42;
+            Console.WriteLine("Question 5:Decimal to Binary Conversion");
+            int decimalNumber = 24;
             string binary = DecimalToBinary(decimalNumber);
             Console.WriteLine(binary);
 
             // Question 6: Find Minimum in Rotated Sorted Array
-            Console.WriteLine("Question 6:");
-            int[] nums5 = { 3, 4, 5, 1, 2 };
+            Console.WriteLine("Question 6: Minimum in Rotated Sorted Array");
+            int[] nums5 = { 3, 4, 5,2 };
             int minElement = FindMin(nums5);
             Console.WriteLine(minElement);
 
             // Question 7: Palindrome Number
-            Console.WriteLine("Question 7:");
-            int palindromeNumber = 121;
+            Console.WriteLine("Question 7:Palindrome Number");
+            int palindromeNumber = 1212;
             bool isPalindrome = IsPalindrome(palindromeNumber);
             Console.WriteLine(isPalindrome);
 
             // Question 8: Fibonacci Number
-            Console.WriteLine("Question 8:");
-            int n = 4;
+            Console.WriteLine("Question 8:Fibonacci Number");
+            int n = 13;
             int fibonacciNumber = Fibonacci(n);
             Console.WriteLine(fibonacciNumber);
         }
@@ -65,21 +65,13 @@ namespace Assignment_2
             try
             {
                 // Write your code here
-                var result = new List<int>();
-                for (int i = 0; i < nums.Length; i++)
-                {
-                    int index = Math.Abs(nums[i]) - 1;
-                    if (nums[index] > 0)
-                    {
-                        nums[index] = -nums[index];
-                    }
-                }
+                
+                foreach (var num in nums)
+                    nums[Math.Abs(num) - 1] = -Math.Abs(nums[Math.Abs(num) - 1]);
 
+                List<int> result = new();
                 for (int i = 0; i < nums.Length; i++)
-                {
-                    if (nums[i] > 0)
-                        result.Add(i + 1);
-                }
+                    if (nums[i] > 0) result.Add(i + 1);
 
                 return result;
 
@@ -97,22 +89,14 @@ namespace Assignment_2
             try
             {
                 // Write your code here
-                int left = 0, right = nums.Length - 1;
-
-                while (left < right)
-                {
-                    if (nums[left] % 2 > nums[right] % 2)
-                    {
-                        int temp = nums[left];
-                        nums[left] = nums[right];
-                        nums[right] = temp;
-                    }
-
-                    if (nums[left] % 2 == 0) left++;
-                    if (nums[right] % 2 == 1) right--;
-                }
-
-                return nums;
+                
+                    // Initialize a list to store the result
+                    List<int> result = new();
+                    foreach (int n in nums)
+                        if (n % 2 == 0) result.Insert(0, n); else result.Add(n);
+                // Convert the list to an array and return it
+                return result.ToArray();
+                
             }
             catch (Exception)
             {
@@ -127,22 +111,24 @@ namespace Assignment_2
             try
             {
                 // Write your code here
-                Dictionary<int, int> map = new Dictionary<int, int>();
+                // Dictionary to store number and its index
+                Dictionary<int, int> map = new();
 
                 for (int i = 0; i < nums.Length; i++)
                 {
                     int complement = target - nums[i];
+
+                    // Check if the complement is already in the map
                     if (map.ContainsKey(complement))
                     {
                         return new int[] { map[complement], i };
                     }
-                    if (!map.ContainsKey(nums[i]))
-                    {
-                        map[nums[i]] = i;
-                    }
-                }
 
-                return new int[] { };
+                    // Add current number and index to the map
+                    if (!map.ContainsKey(nums[i]))
+                        map[nums[i]] = i;
+                }
+                  return new int[0];
             }
             catch (Exception)
             {
@@ -157,11 +143,11 @@ namespace Assignment_2
             try
             {
                 // Write your code here
-                Array.Sort(nums);
-                int n = nums.Length;
-
-                return Math.Max(nums[n - 1] * nums[n - 2] * nums[n - 3],
-                                nums[0] * nums[1] * nums[n - 1]);
+                {
+                    Array.Sort(nums);
+                // Max product can be either from the three largest or two smallest (negatives) and the largest
+                    return Math.Max(nums[^1] * nums[^2] * nums[^3], nums[0] * nums[1] * nums[^1]);
+                }
             }
             catch (Exception)
             {
@@ -176,17 +162,8 @@ namespace Assignment_2
             try
             {
                 // Write your code here
-                if (decimalNumber == 0)
-                    return "0";
-
-                string binary = "";
-                while (decimalNumber > 0)
-                {
-                    binary = (decimalNumber % 2) + binary;
-                    decimalNumber /= 2;
-                }
-
-                return binary;
+                // Convert decimal to binary using base 2
+                return Convert.ToString(decimalNumber, 2); 
             }
             catch (Exception)
             {
@@ -203,6 +180,7 @@ namespace Assignment_2
                 // Write your code here
                 int left = 0, right = nums.Length - 1;
 
+                // Binary search to find the minimum element in the rotated sorted array
                 while (left < right)
                 {
                     int mid = left + (right - left) / 2;
@@ -231,17 +209,11 @@ namespace Assignment_2
             try
             {
                 // Write your code here
-                if (x < 0 || (x % 10 == 0 && x != 0))
-                    return false;
+                // Negative numbers are not palindromes
+                if (x < 0) return false;
 
-                int reversed = 0;
-                while (x > reversed)
-                {
-                    reversed = reversed * 10 + x % 10;
-                    x /= 10;
-                }
-
-                return x == reversed || x == reversed / 10;
+                // Convert the number to string, reverse it, and compare
+                 return x.ToString() == new string(x.ToString().Reverse().ToArray());   
             }
             catch (Exception)
             {
@@ -257,20 +229,17 @@ namespace Assignment_2
             {
                 // Write your code here
 
-                if (n == 0)
-                    return 0;
-                if (n == 1)
-                    return 1;
+                if (n <= 1) 
+                    return n; 
 
-                int a = 0, b = 1, c = 0;
+                int a = 0, b = 1;
                 for (int i = 2; i <= n; i++)
                 {
-                    c = a + b;
-                    a = b;
-                    b = c;
+                    int temp = a + b; // Next Fibonacci number
+                    a = b;            // Shift a to b
+                    b = temp;         // Update b to the new value
                 }
-
-                return c;
+                return b; // b holds the nth Fibonacci number
             }
             catch (Exception)
             {
